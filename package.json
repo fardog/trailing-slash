@@ -1,0 +1,27 @@
+{
+  "name": "trailing-slash",
+  "version": "0.0.0",
+  "description": "Add or remove trailing slashes, and redirect.",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/tape test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fardog/trailing-slash.git"
+  },
+  "keywords": [
+    "http",
+    "redirect",
+    "slash"
+  ],
+  "author": "Nathan Wittstock <nate@milkandtang.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fardog/trailing-slash/issues"
+  },
+  "homepage": "https://github.com/fardog/trailing-slash",
+  "devDependencies": {
+    "tape": "^3.0.3"
+  }
+}
