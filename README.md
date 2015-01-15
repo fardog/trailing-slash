@@ -12,7 +12,7 @@ var trailingSlash = require('trailing-slash')
 var trailing = trailingSlash(true, done)
 
 //later, a GET request is made with the url '/post/some-title'
-router(req, res) // redirects to '/post/some-title/'
+trailing(req, res) // redirects to '/post/some-title/'
 
 function done(req, res) {
   // called after successful redirect
