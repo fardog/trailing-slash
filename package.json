@@ -21,6 +21,7 @@
     "url": "https://github.com/fardog/trailing-slash/issues"
   },
   "homepage": "https://github.com/fardog/trailing-slash",
+  "dependencies": {},
   "devDependencies": {
     "tape": "^3.0.3"
   }
