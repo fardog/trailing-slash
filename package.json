@@ -1,6 +1,6 @@
 {
   "name": "trailing-slash",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Add or remove trailing slashes, and redirect.",
   "main": "index.js",
   "scripts": {
