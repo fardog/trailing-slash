@@ -54,3 +54,4 @@ MIT. See [LICENSE](./LICENSE) for details.
 [request]: http://nodejs.org/api/http.html#http_http_incomingmessage
 [server]: http://nodejs.org/api/http.html#http_class_http_server
 [routes]: https://www.npmjs.com/package/routes 
+[response]: http://nodejs.org/api/http.html#http_class_http_serverresponse
