@@ -14,7 +14,7 @@ redirect when trailing slashes don't meet your expectations.
 ```javascript
 var trailingSlash = require('trailing-slash')
 
-var trailing = trailingSlash(true, done)
+var trailing = trailingSlash({slash: true}, done)
 
 //later, a GET request is made with the url '/post/some-title'
 trailing(req, res) // redirects to '/post/some-title/'
@@ -27,16 +27,20 @@ function done(req, res) {
 
 ## API
 
-- `trailingSlash(shouldHaveSlash, next [, statusCode])` - Create a new handler,
-  which returns a function. Accepts the following parameters:
-    - `shouldHaveSlash` - A boolean, representing whether or not the route
-      should have a slash at the end; `true` for yes, `false` for no.
-    - `next` - The function to be called if the slashes match expectations, and
-      a redirect is not necessary.
-    - `statusCode` - An integer for the status code that should be sent--either
-      301 (permanent redirect) or 302 (temporary redirect)--if a redirect is
-      necessary. Defaults to 301 if this parameter is not provided.
-
+- `trailingSlash([options] [, next])` - Create a new handler, which returns a
+  function. Accepts the following parameters:
+    - `options` object: containing any of the following properties:
+        - `slash` boolean (default: `true`): when `true` a URL will be
+          redirected to contain a slash; when `false`, it will be redirected to
+          omit one.
+        - `status` number (default: `302`): the URL to be used for redirect,
+          which can be either `301` (permanent redirect) or `302` (temporary
+          redirect)
+    - `next` function: called if the slashes match expectations, and a redirect
+      is not necessary. When not provided, the returned function acts in a
+      Connect-like middleware compatibility mode, where it expects the last
+      parameter to be a `next` to be called upon pass.
+    
 Returns a function with the following signature:
 
 - `trailing(request, response [, args ...])`
@@ -46,6 +50,20 @@ Returns a function with the following signature:
       [http.Server][server] or similar.
     - `args` - Any number of arguments which will be passed to the matched
       function.
+      
+### Middleware
+
+When `next` is not specified, trailing-slash operates in a
+Connect/Express-compatible mode, where it can be used as middleware:
+
+```javascript
+var trailingSlash = require('trailing-slash')
+var express = require('express')
+
+var app = express()
+
+app.use(trailingSlash({slash: true}))
+```
 
 ## License
 

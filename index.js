@@ -1,48 +1,39 @@
 var u = require('url')
-var parse = u.parse
-var format = u.format
 
 module.exports = createTrailing
 
-function createTrailing (shouldExist, next, _status) {
-  if (typeof shouldExist === 'undefined') {
-    throw new Error(
-        'shouldExist must be passed when instantiating. See the ' +
-        'docs for further information.'
-    )
-  }
-
-  if (typeof next !== 'function') {
-    throw new Error(
-        'You must provide a function to be called on a successful match. ' +
-        'See the docs for further information.'
-    )
-  }
-
-  var status = _status || 301
+function createTrailing (_options, _next) {
+  var next = typeof _options === 'function' ? _options : _next
+  var options = typeof _options === 'object' ? _options : {}
+  var status = options.status || 302
+  var slash = typeof options.slash === 'undefined' ? true : options.slash
+  var middleware = !next
 
   return function trailingSlash () {
-    var args = [].slice.call(arguments)
+    var args = Array.prototype.slice.call(arguments)
+    var done = middleware ? args.slice(-1)[0] : next
+
     var req = args[0]
     var res = args[1]
-    var url = parse(req.url)
+    var url = u.parse(req.url)
     var length = url.pathname.length
     var hasSlash = url.pathname.charAt(length - 1) === '/'
 
-    if (hasSlash === shouldExist) {
-      next.apply(null, args)
-
-      return
+    if (hasSlash === slash) {
+      if (middleware) {
+        return done()
+      }
+      return next.apply(null, args)
     }
 
-    if (shouldExist) {
+    if (slash) {
       url.pathname = url.pathname + '/'
     } else {
       url.pathname = url.pathname.slice(0, -1)
     }
 
     res.statusCode = status
-    res.setHeader('Location', format(url))
+    res.setHeader('Location', u.format(url))
     res.end()
   }
 }
