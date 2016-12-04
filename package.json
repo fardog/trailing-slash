@@ -4,7 +4,8 @@
   "description": "Add or remove trailing slashes, and redirect.",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/tape test.js"
+    "lint": "standard **/*.js",
+    "test": "tape test.js && npm run lint"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
   "homepage": "https://github.com/fardog/trailing-slash",
   "dependencies": {},
   "devDependencies": {
-    "tape": "^3.0.3"
+    "standard": "^8.6.0",
+    "tape": "^4.6.3"
   }
 }
