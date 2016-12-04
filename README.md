@@ -13,14 +13,15 @@ redirect when trailing slashes don't meet your expectations.
 
 ```javascript
 var trailingSlash = require('trailing-slash')
+var http = require('http')
 
-var trailing = trailingSlash({slash: true}, done)
+var trailing = trailingSlash({slash: true}, handler)
+var server = http.createServer(trailing)
 
-//later, a GET request is made with the url '/post/some-title'
-trailing(req, res) // redirects to '/post/some-title/'
+server.listen(8080)
 
-function done(req, res) {
-  // would be called after successful redirect
+function handler (req, res) {
+  // any calls reaching here will have a trailing slash
   console.log(req.url) // '/post/some-title/'
 }
 ```
@@ -63,6 +64,8 @@ var express = require('express')
 var app = express()
 
 app.use(trailingSlash({slash: true}))
+
+app.listen(8080)
 ```
 
 ## License
