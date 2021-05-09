@@ -33,7 +33,14 @@ function createTrailing (_options, _next) {
     }
 
     res.statusCode = status
-    res.setHeader('Location', u.format(url))
+    res.setHeader('Location', escapeLeadingSlashes(u.format(url)))
     res.end()
   }
+}
+
+function escapeLeadingSlashes (url) {
+  if (url.slice(0, 2) === '//') {
+    return '/%2F' + url.slice(2)
+  }
+  return url
 }
