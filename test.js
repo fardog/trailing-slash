@@ -224,3 +224,25 @@ test('test connect middleware feature, options', function (t) {
     t.pass('called next')
   }
 })
+
+test('escapes leading slashes in url', function (t) {
+  t.plan(3)
+
+  var redirect = trailing({slash: true}, fail)
+  var req = {url: '//something/else'}
+  var res = {
+    setHeader: function (name, value) {
+      t.equal(name, 'Location')
+      t.equal(value, '/%2Fsomething/else/')
+    },
+    end: function () {
+      t.ok(true)
+    }
+  }
+
+  redirect(req, res)
+
+  function fail (request, response) {
+    t.ok(false) // fail if we reach here
+  }
+})
