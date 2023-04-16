@@ -24,7 +24,7 @@
   "homepage": "https://github.com/fardog/trailing-slash",
   "dependencies": {},
   "devDependencies": {
-    "standard": "^8.6.0",
+    "standard": "^17.0.0",
     "tape": "^4.6.3"
   }
 }
